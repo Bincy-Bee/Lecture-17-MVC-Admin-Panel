@@ -1,6 +1,7 @@
 const { user } = require("../model/user.model");
 
 const home = (req,res)=>{
+    console.log(req.cookies);
     res.send("Welcome to controller");
 }
 
@@ -32,7 +33,7 @@ const login = async(req,res)=>{
         if(data.password != req.body.password){
             return res.send("Password is wrong")
         }
-        return res.send("logged In")
+        return res.cookie("id", data.id).send("logged In");
         
     } catch (error) {
         return res.send(error.message)
@@ -40,14 +41,17 @@ const login = async(req,res)=>{
 }
 
 const index = (req, res)=>{
-    res.render("index", {name : "Bhavin"})
+    res.cookie("name", "hey bhavin").render("index", {name : "Bhavin"})
 }
 
-const index1 = (req,res)=>{
-    res.render("index1");
-}
-const index2 = (req,res)=>{
-    res.render("index2");
+
+const getUser = async (req,res)=>{
+    let data =await user.find();
+    res.send(data);
 }
 
-module.exports = {home, signup, login, index, index1, index2}
+const loginPage = (req,res)=>{
+    res.render("login")
+}
+
+module.exports = {home, signup, login, index, getUser, loginPage}
