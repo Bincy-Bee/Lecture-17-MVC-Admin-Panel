@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <h1>Welcome to Profile Page</h1>
+    <h4>Username : <%=user.username %></h4>
+    <h4>Userpassword : <%=user.password %></h4>
+    <h4>User Email : <%=user.email %></h4>
+
+    <form action="/reset" method="post">
+        <input type="text" name="oldpassword" placeholder="Old password"><br><br>
+        <input type="text" name="newpassword" placeholder="New password"><br><br>
+        <input type="submit"><br><br>
+    </form>
+</body>
+</html>

@@ -16,4 +16,13 @@ const findCokkies = async(req,res,next)=>{
     }
 }
 
-module.exports = {findCokkies}
+const isAuth = (req,res,next)=>{
+    if (req.user){
+        next()
+    }
+    else{
+        res.redirect("/login")
+    }
+}
+
+module.exports = {findCokkies, isAuth}

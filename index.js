@@ -8,7 +8,7 @@ const { loaclAuth } = require('./helper/local');
 require("dotenv").config();
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:true}));   
 app.use(session({secret : "pravate key"}));
 loaclAuth(passport);
 app.use(passport.initialize());

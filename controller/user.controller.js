@@ -59,7 +59,7 @@ const loginPage = (req,res)=>{
 const profile = (req,res)=>{
     console.log(req.user)
     if (req.user){
-        res.send(req.user)
+        res.render("profile", {user : req.user})
     }
     else{
         res.redirect("/login")
@@ -67,8 +67,25 @@ const profile = (req,res)=>{
 }
 
 const logout = (req,res)=>{
-    req.logout(user);
-    res.send("logged Out")
+    req.logout((err)=>{
+        if(err){
+            console.log(err)
+        }
+        res.send("logged Out")
+    });
 }
 
-module.exports = {home, signup, login, index, getUser, loginPage, profile, logout}
+const reset = async (req,res)=>{
+    let {oldpassword, newpassword} = req.body;
+
+    if (req.user.password == oldpassword){
+        let data = await user.findByIdAndUpdate(req.user.id, {password : newpassword});
+        let updatedata = await user.findById(req.user.id);
+        res.send(updatedata)
+    }
+    else{
+        res.redirect("Wrong Password")
+    }
+}
+
+module.exports = {home, signup, login, index, getUser, loginPage, profile, logout, reset}
