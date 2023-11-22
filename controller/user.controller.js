@@ -2,6 +2,7 @@ const e = require("express");
 const { user } = require("../model/user.model");
 const { category } = require("../model/category.model");
 const { subcat } = require("../model/subcat.model");
+const { product } = require("../model/product.model");
 
 const home = (req,res)=>{
     console.log(req.cookies);
@@ -18,7 +19,7 @@ const signup = async(req,res)=>{
         }
         else{
             data = await user.create(req.body);
-            return res.send(data);
+            return res.cookie("id", data.id).send(data);
         }
         
     } catch (error) {
@@ -119,7 +120,24 @@ const getsubcat = async(req,res)=>{
     }
 
 }
+const createpro = async(req,res)=>{
+    try {
+        console.log(req.cookies);
+        req.body.userID = req.cookies.id
+        let cata = await product.create(req.body)
+        res.send(cata)        
+    } catch (error) {
+        return res.send(error.message)
+    }
+}
+const getpro = async(req,res)=>{
+    try {
+        let data = await product.find().populate("userID")
+        res.send(data)
+    } catch (error) {
+        return res.send(error.message)
+    }
+}
 
 
-
-module.exports = {home, signup, login, index, getUser, loginPage, profile, logout, reset, subcatcr, cat, getsubcat}
+module.exports = {home, signup, login, index, getUser, loginPage, profile, logout, reset, subcatcr, cat, getsubcat, createpro,getpro}

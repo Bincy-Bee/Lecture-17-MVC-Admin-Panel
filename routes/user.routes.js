@@ -1,5 +1,5 @@
 const {Router}= require('express');
-const { home, signup, login, index, getUser, loginPage, profile, logout, reset, cat, subcat, subcatcr, getsubcat, } = require('../controller/user.controller');
+const { home, signup, login, index, getUser, loginPage, profile, logout, reset, cat, subcat, subcatcr, getsubcat, createpro, getpro, } = require('../controller/user.controller');
 const { findCokkies, isAuth } = require('../middleware/auth');
 const passport = require('passport');
 const router = Router();
@@ -29,7 +29,11 @@ router.post("/category", cat)
 
 router.post("/subcategory", subcatcr);
 
-router.get("/subcat",getsubcat)
+router.get("/subcat",getsubcat);
+
+router.post("/product",createpro);
+
+router.get("/getproduct", getpro)
 
 
 module.exports={router};
