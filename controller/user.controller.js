@@ -1,5 +1,7 @@
 const e = require("express");
 const { user } = require("../model/user.model");
+const { category } = require("../model/category.model");
+const { subcat } = require("../model/subcat.model");
 
 const home = (req,res)=>{
     console.log(req.cookies);
@@ -88,4 +90,36 @@ const reset = async (req,res)=>{
     }
 }
 
-module.exports = {home, signup, login, index, getUser, loginPage, profile, logout, reset}
+//Populate Routes
+
+const cat = async(req,res)=>{
+    try {
+        let data = await category.create(req.body);
+        res.send(data)
+        
+    } catch (error) {
+        return res.send(error.message)
+    }
+}
+const subcatcr = async(req,res)=>{
+    try {
+        let data = await subcat.create(req.body)
+        res.send(data)
+        
+    } catch (error) {
+        return res.send(error.message)
+    }
+}
+const getsubcat = async(req,res)=>{
+    try {
+        let data = await subcat.find().populate("categoryID");
+        res.send(data)
+    } catch (error) {
+        return res.send(error.message)
+    }
+
+}
+
+
+
+module.exports = {home, signup, login, index, getUser, loginPage, profile, logout, reset, subcatcr, cat, getsubcat}

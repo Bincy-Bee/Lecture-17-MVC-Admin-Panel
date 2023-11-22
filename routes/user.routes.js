@@ -1,5 +1,5 @@
 const {Router}= require('express');
-const { home, signup, login, index, getUser, loginPage, profile, logout, reset, } = require('../controller/user.controller');
+const { home, signup, login, index, getUser, loginPage, profile, logout, reset, cat, subcat, subcatcr, getsubcat, } = require('../controller/user.controller');
 const { findCokkies, isAuth } = require('../middleware/auth');
 const passport = require('passport');
 const router = Router();
@@ -21,7 +21,15 @@ router.get("/profile",isAuth, profile)
 
 router.get("/logout",logout)
 
-router.post("/reset", reset)
+router.post("/reset", reset);
+
+//Ppulates Routes
+
+router.post("/category", cat)
+
+router.post("/subcategory", subcatcr);
+
+router.get("/subcat",getsubcat)
 
 
 module.exports={router};
